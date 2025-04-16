@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Language Recognition</title>
+</head>
+<body>
+    <h1>Sign Language Recognition</h1>
+    <div>
+        <img src="{{ url_for('video_feed') }}" alt="Video feed">
+    </div>
+    <div>
+        <button id="stopButton">Stop and Get Chatbot Response</button>
+    </div>
+    <div>
+        <h3>Detected Letters: <span id="detectedLetters">{{ sign_string }}</span></h3>
+    </div>
+    <div id="chatbotResponse">
+        <!-- Chatbot response will be displayed here -->
+    </div>
+
+    <script>
+        // Function to speak the text using the Web Speech API
+        function speakText(text) {
+            if ('speechSynthesis' in window) {
+                const utterance = new SpeechSynthesisUtterance(text);
+                utterance.lang = 'en-US'; // Set the language
+                window.speechSynthesis.speak(utterance);
+            } else {
+                console.error('Speech synthesis not supported in this browser.');
+            }
+        }
+
+        document.getElementById('stopButton').addEventListener('click', function() {
+            fetch('/get_chatbot_response', {
+                method: 'POST'
+            })
+            .then(response => response.json())
+            .then(data => {
+                const chatbotResponse = "Chatbot Response: " + data.response;
+                document.getElementById('chatbotResponse').innerText = chatbotResponse;
+                
+                // Speak the chatbot response
+                speakText(data.response);
+
+                // Clear detected letters after response is received
+                document.getElementById('detectedLetters').innerText = "None";
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        });
+
+        // Function to periodically update the detected letters from the backend
+        setInterval(function() {
+            fetch('/get_current_sign')
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('detectedLetters').innerText = data.sign_string;
+                });
+        }, 500); // Update every 500ms
+    </script>
+</body>
+</html>

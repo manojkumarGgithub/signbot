@@ -115,7 +115,7 @@ pyee==12.1.1
 pygame==2.6.1
 PyGetWindow==0.0.9
 Pygments==2.18.0
-pyinstaller==5.4.1
+pyinstaller>=5.5
 pyinstaller-hooks-contrib==2022.10
 pylibsrtp==0.10.0
 PyMsgBox==1.0.9

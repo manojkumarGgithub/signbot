@@ -105,7 +105,7 @@ pure_eval==0.2.3
 pyarrow==18.1.0
 pyasn1==0.6.1
 pyasn1_modules==0.4.1
-PyAudio==0.2.12
+PyAudio==0.2.11
 PyAutoGUI==0.9.54
 pycparser==2.21
 pydantic==2.10.5

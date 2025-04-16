@@ -11,7 +11,7 @@ import smtplib
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 # Set up Google Generative AI API
-genai.configure(api_key=os.environ['GOOGLE_API_KEY'])
+genai.configure(api_key='AIzaSyAWtVNjcUz82dOMCZVPxUUL_j0EemlYkkc')
 
 # Load the sign language model
 model_dict = pickle.load(open('./model.p', 'rb'))
